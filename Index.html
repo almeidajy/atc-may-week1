@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Report - English At Young Age Program - ATC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc; /* Lighter gray background */
+            color: #374151; /* Darker gray text */
+        }
+
+        /* --- Brand Colors --- */
+        :root {
+            --brand-blue: #2563eb; /* Example Blue - Adjust if specific hex is known */
+            --brand-blue-light: #dbeafe;
+            --brand-blue-dark: #1e40af;
+            --brand-green: #10b981; /* Existing Green */
+            --brand-green-light: #d1fae5;
+        }
+
+        .report-container {
+            max-width: 1200px;
+            margin: 2rem auto; /* Added top/bottom margin */
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Softer shadow */
+            border-radius: 0.5rem; /* Added rounded corners */
+            border-top: 5px solid var(--brand-blue); /* Blue top border */
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .attendance-table th, .attendance-table td {
+            padding: 0.75rem 0.5rem; /* Increased padding */
+            text-align: center;
+            border: 1px solid #e5e7eb; /* Lighter borders */
+        }
+
+        .attendance-table th {
+            font-weight: 600; /* Semibold headers */
+             background-color: #f3f4f6; /* Light gray header background */
+        }
+
+        .present {
+            background-color: var(--brand-green);
+            color: white;
+            border-radius: 50%;
+            width: 28px; /* Slightly larger */
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .absent {
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+             font-weight: 500;
+        }
+
+        .no-class {
+            background-color: #9ca3af;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .day-section {
+            border-left: 4px solid var(--brand-blue); /* Blue left border */
+            padding-left: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .teacher-section {
+            border-left: 3px solid var(--brand-green); /* Green left border */
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Custom Tailwind Classes */
+        .brand-text-blue { color: var(--brand-blue-dark); }
+        .brand-text-green { color: var(--brand-green); }
+        .brand-bg-blue-light { background-color: var(--brand-blue-light); }
+        .brand-bg-green-light { background-color: var(--brand-green-light); }
+        .brand-border-blue { border-color: var(--brand-blue); }
+
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                background-color: white; /* Ensure white background for printing */
+            }
+            .report-container {
+                 box-shadow: none;
+                 border: 1px solid #ccc;
+                 margin: 0;
+                 border-radius: 0;
+                 border-top: 5px solid var(--brand-blue);
+            }
+            .chart-container {
+                height: 300px; /* Adjust height for print */
+            }
+            /* Hide elements not needed for print if necessary */
+            /* .no-print { display: none; } */
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-300">
+            <div>
+                <h1 class="text-3xl font-bold brand-text-blue">Weekly Report</h1>
+                <h2 class="text-xl text-gray-700">English At Young Age Program</h2>
+                <p class="text-sm text-gray-500">May 5-9, 2025</p>
+            </div>
+            <div class="flex flex-col items-end">
+                <img src="https://grupoysam.com/wp-content/uploads/2025/05/ATC2.webp" alt="ATC Logo" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/100x64/cccccc/ffffff?text=ATC+Logo';">
+                <p class="text-sm text-gray-700 mt-2">Report compiled by: Almeida José</p>
+            </div>
+        </header>
+
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold mb-4 brand-text-blue">Executive Summary</h2>
+            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <p class="mb-3 text-gray-800">This report summarizes the activities conducted in the English At Young Age program for the week of May 5-9, 2025. The program is divided into morning and afternoon sessions with different focus areas and student groups.</p>
+                <p class="mb-3 text-gray-800">Morning sessions primarily focused on schedules, time expressions, and daily routines, while afternoon sessions covered the English alphabet and time-related vocabulary. Various teaching methodologies were employed, including informative, illustrative, collaborative, and participatory approaches.</p>
+                <p class="text-gray-800">Despite some attendance challenges due to reported climate issues, significant progress was made in both curriculum areas.</p>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 brand-text-blue">Program Dashboard</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Daily Attendance Rate</h3>
+                    <div class="chart-container">
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Topics Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="topicsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Teaching Methodologies Used</h3>
+                    <div class="chart-container">
+                        <canvas id="methodsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Morning vs Afternoon Attendance Rate</h3>
+                    <div class="chart-container">
+                        <canvas id="sessionComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold mb-4 brand-text-blue">Student Attendance Tracking</h2>
+
+            <div class="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
+                <h3 class="text-lg font-semibold mb-3 text-gray-800">Morning Class Attendance</h3>
+                <table class="attendance-table w-full border-collapse">
+                    <thead>
+                        <tr class="brand-bg-blue-light text-gray-700">
+                            <th class="border border-gray-300 px-2 py-2">Student Name</th>
+                            <th class="border border-gray-300 px-2 py-2">Monday</th>
+                            <th class="border border-gray-300 px-2 py-2">Tuesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Wednesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Thursday</th>
+                            <th class="border border-gray-300 px-2 py-2">Friday</th>
+                            <th class="border border-gray-300 px-2 py-2">Attendance Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tr>
+                            <td class="border border-gray-300">Catarina Crismodia Miguel</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="no-class mx-auto">-</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium">75%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Filomeno Miguel</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="no-class mx-auto">-</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium">75%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Emanuel Amorim</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="no-class mx-auto">-</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">0%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">André Isabel Tembo</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="no-class mx-auto">-</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 bg-white p-4 rounded-lg shadow-md overflow-x-auto">
+                <h3 class="text-lg font-semibold mb-3 text-gray-800">Afternoon Class Attendance (José's Group)</h3>
+                <table class="attendance-table w-full border-collapse">
+                    <thead>
+                        <tr class="brand-bg-green-light text-gray-700">
+                            <th class="border border-gray-300 px-2 py-2">Student Name</th>
+                            <th class="border border-gray-300 px-2 py-2">Monday</th>
+                            <th class="border border-gray-300 px-2 py-2">Tuesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Wednesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Thursday</th>
+                            <th class="border border-gray-300 px-2 py-2">Friday</th>
+                            <th class="border border-gray-300 px-2 py-2">Attendance Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tr>
+                            <td class="border border-gray-300">Júlia</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium text-green-700">100%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 bg-white p-4 rounded-lg shadow-md overflow-x-auto">
+                <h3 class="text-lg font-semibold mb-3 text-gray-800">Afternoon Class Attendance (Verónica's Group)</h3>
+                <table class="attendance-table w-full border-collapse">
+                    <thead>
+                        <tr class="bg-yellow-100 text-gray-700">
+                            <th class="border border-gray-300 px-2 py-2">Student Name</th>
+                            <th class="border border-gray-300 px-2 py-2">Monday</th>
+                            <th class="border border-gray-300 px-2 py-2">Tuesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Wednesday</th>
+                            <th class="border border-gray-300 px-2 py-2">Thursday</th>
+                            <th class="border border-gray-300 px-2 py-2">Friday</th>
+                            <th class="border border-gray-300 px-2 py-2">Attendance Rate</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                        <tr>
+                            <td class="border border-gray-300">Ângelo Buanga</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium">60%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Azael Buanga</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium">60%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Tainara Custódio</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium">80%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Ângela Nombo</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium text-green-700">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Valentina</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium text-green-700">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Ithadiana</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium">40%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Cleópatra</td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium text-green-700">100%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Maria Nombo</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300 font-medium">80%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Danilo</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="present mx-auto">P</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">20%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Itiel</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">0%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Daniela</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">0%</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300">Maria Rosh</td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300"><div class="absent mx-auto">A</div></td>
+                            <td class="border border-gray-300 font-medium text-red-600">0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold mb-6 brand-text-blue">Daily Class Details</h2>
+
+            <div class="day-section">
+                <h3 class="text-xl font-medium mb-4 text-gray-800">Monday, May 5, 2025</h3>
+                <div class="mb-6 brand-bg-blue-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Morning Session (8:00 AM)</h4>
+                    <div class="teacher-section border-l-blue-600">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Talking about schedule and Time</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Introduction:</h6><p class="text-gray-600">Questions to make when asking about time:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Q: "What time is it?"</li><li>A: "It is 2 O'clock"</li><li>A: "It is half past 3"</li><li>A: "It's quarter to 5"</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Development:</h6><p class="text-gray-600">Activity 2: Make your Schedule</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Create a daily schedule using times and activities</li><li>Draw a chart on a piece of paper</li><li>Write the time in the chart</li><li>Try to add more activities</li><li>Try to make a chart for a week</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Learning Objectives:</h6><p class="text-sm text-gray-600">Understanding and practice asking and answering questions about times and drawing schedules.</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Catarina Crismodia Miguel</li><li>Filomeno Miguel</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Emanuel Amorim</li><li>André Isabel Tembo</li></ul></div></div>
+                    </div>
+                </div>
+                <div class="brand-bg-green-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Afternoon Sessions (4:00 PM)</h4>
+                    <div class="teacher-section">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: English Alphabet - Day 2: The alphabet continued from D to G (Review)</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Introduction:</h6><p>Activity 1: Learn letters D, E, F, G</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Say "D" as in dog, then say only "dog"</li><li>Say "E" as in elephant, then say only "elephant"</li><li>Say "F" as in fish, then say only "fish"</li><li>Say "G" as in goat, then say only "goat"</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method and illustrative method</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Present (1):</h6><p class="text-sm text-gray-600">Júlia</p></div>
+                    </div>
+                    <div class="teacher-section mt-4">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: Verónica Tibúrcio</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Times and Schedules</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Content:</h6><p class="text-sm text-gray-600">Reinforcement lesson on time in written and numerical forms:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Written form: "It's quarter past one."</li><li>Numerical form: "It's 01:15"</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activities:</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Identify the time and write it in numerical form.</li><li>Identify the time and write it in full (written) form.</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Joint explanatory and collaborative method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (7):</h6><ul class="list-disc ml-6 text-gray-600"><li>Ângelo Buanga</li><li>Azael Buanga</li><li>Tainara Custódio</li><li>Ângela Nombo</li><li>Valentina</li><li>Ithadiana</li><li>Cleópatra</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (5):</h6><ul class="list-disc ml-6 text-gray-600"><li>Itiel</li><li>Daniela</li><li>Maria Rosh</li><li>Maria Nombo</li><li>Danilo</li></ul></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="day-section">
+                <h3 class="text-xl font-medium mb-4 text-gray-800">Tuesday, May 6, 2025</h3>
+                <div class="mb-6 brand-bg-blue-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Morning Session (8:00 AM)</h4>
+                    <div class="p-3 bg-yellow-100 rounded border border-yellow-300">
+                        <p class="font-medium text-yellow-800">Note: Due to climate change, no students attended the morning session.</p>
+                    </div>
+                    <div class="mt-3 text-sm">
+                        <h6 class="font-medium text-gray-700">Absent (4):</h6>
+                        <ul class="list-disc ml-6 text-gray-600">
+                            <li>Emanuel Amorim</li><li>André Isabel Tembo</li><li>Catarina Crismodia Miguel</li><li>Filomeno Miguel</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="brand-bg-green-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Afternoon Sessions (4:00 PM)</h4>
+                    <div class="teacher-section">
+                         <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                         <h5 class="font-medium mb-1 text-gray-800">Theme: English Alphabet - Day 2: The alphabet continued from H to M</h5>
+                         <div class="mb-3"><h6 class="font-medium text-gray-700">Activity:</h6><p>Learn Letters H, I, K, L, M</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Say "H" as in hat, then say only "hat"</li><li>Say "I" as in ice cream, then say only "ice cream"</li><li>Say "J" as in juice, then say only "juice"</li><li>Say "K" as in kite, then say only "kite"</li><li>Say "L" as in lion, then say only "lion"</li><li>Say "M" as in monkey, then say only "monkey"</li></ul></div>
+                         <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method and illustrative method</p></div>
+                         <div class="mb-3"><h6 class="font-medium text-gray-700">Present (1):</h6><p class="text-sm text-gray-600">Júlia</p></div>
+                    </div>
+                    <div class="teacher-section mt-4">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: Verónica Tibúrcio</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Talking about schedules and time</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activities:</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Watched a video focused on schedules and time</li><li>Video demonstration of a clock with students identifying the time</li><li>Reading text about "daily routine" connecting to the main topic</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Sample Text Used:</h6><p class="text-sm italic bg-gray-100 p-3 rounded border border-gray-200 text-gray-700"> "Hello class! My name is Angbu and I'm going to talk about my daily routine. In the morning, I wake up at 6:00, I pray 10 minutes and I take my bath, I brush my teeth, at 7:00 I have my breakfast. At 7:30 I go to school and at 8:00 my class begins. At 10:45 is the time of recess, I play, I run, I jump with my friends: Chidi and Suku. At 12:00 I go back home and I have my lunch at 12:30. At 04:00PM I go to English training center with Zinga, Tchissola and Zanele." </p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Joint explanatory and collaborative method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (7):</h6><ul class="list-disc ml-6 text-gray-600"><li>Ângelo Buanga</li><li>Azael Buanga</li><li>Tainara Custódio</li><li>Ângela Nombo</li><li>Valentina</li><li>Maria Nombo</li><li>Cleópatra</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (4):</h6><ul class="list-disc ml-6 text-gray-600"><li>Itiel</li><li>Daniela</li><li>Maria Rosh</li><li>Ithadiana</li></ul></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-section">
+                <h3 class="text-xl font-medium mb-4 text-gray-800">Wednesday, May 7, 2025</h3>
+                 <div class="mb-6 brand-bg-blue-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Morning Session (8:00 AM)</h4>
+                    <div class="teacher-section border-l-blue-600">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Practicing activity sections</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activities:</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Matching time in attachment of daily routine</li><li>Describing most regular activity</li><li>Putting it all together: My Day (Emphasizing daily activity, adding details)</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Example:</h6><p class="text-sm italic bg-gray-50 p-3 rounded border border-gray-200 text-gray-700"> "I wake up at 6 O'clock. I have breakfast at 7 and go to school/Center at 8. I study until 12, then eat lunch. After school, I play football at 4 and read a book before bed." </p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Catarina Crismodia Miguel</li><li>Filomeno Miguel</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Emanuel Amorim</li><li>André Isabel Tembo</li></ul></div></div>
+                    </div>
+                </div>
+                <div class="brand-bg-green-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Afternoon Sessions (4:00 PM)</h4>
+                    <div class="teacher-section">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: English Alphabet Activity Continues...</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activity 3: Rhyming Game</h6><p class="text-sm text-gray-600">Listen and repeat!</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Listen to "hat", then repeat "cat"</li><li>Listen to "ice", then repeat "mice"</li><li>Listen to "juice", then repeat "loose"</li><li>Listen to "kite", then repeat "bite"</li><li>Listen to "lion", then repeat "iron"</li><li>Listen to "monkey", then repeat "donkey"</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method and illustrative method</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Present (1):</h6><p class="text-sm text-gray-600">Júlia</p></div>
+                    </div>
+                    <div class="teacher-section mt-4">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: Verónica Tibúrcio</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Schedules and time (continued)</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activities:</h6><p class="text-sm text-gray-600">30-minute reinforcement lesson on time expressions, explaining the transition from "past" to "to" when going beyond half an hour.</p><p class="text-sm font-medium mt-2 text-gray-700">Examples practiced:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>7:45</li><li>9:35</li><li>6:55</li><li>23:59</li><li>10:40</li><li>21:50</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Oral Assessment:</h6><p class="text-sm text-gray-600">Students talked about their daily routines, answering time-related questions:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>What time do you wake up?</li><li>What do you do when you wake up?</li><li>What time do you go to school?</li><li>What time do you have your recess and your lunch?</li><li>What time do you go back home?</li><li>What time do you sleep?</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Joint explanatory and collaborative method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (7):</h6><ul class="list-disc ml-6 text-gray-600"><li>Ângelo Buanga</li><li>Azael Buanga</li><li>Ângela Nombo</li><li>Valentina</li><li>Maria Nombo</li><li>Cleópatra</li><li>Ithadiana</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (4):</h6><ul class="list-disc ml-6 text-gray-600"><li>Itiel</li><li>Daniela</li><li>Maria Rosh</li><li>Danilo</li></ul></div></div>
+                        <div class="p-3 bg-yellow-100 rounded mt-3 border border-yellow-300"><p class="font-medium text-yellow-800">Note: Teacher reported an issue with one of the rectangular tables in the children's classroom starting to come apart.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-section">
+                <h3 class="text-xl font-medium mb-4 text-gray-800">Thursday, May 8, 2025</h3>
+                <div class="mb-6 brand-bg-blue-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Morning Session (8:00 AM)</h4>
+                    <div class="p-3 bg-yellow-100 rounded border border-yellow-300"><p class="font-medium text-yellow-800">Note: Due to climate change, no class was held in the morning.</p></div>
+                    <div class="mt-3 text-sm"><h6 class="font-medium text-gray-700">Absent (4):</h6><ul class="list-disc ml-6 text-gray-600"><li>Emanuel Amorim</li><li>André Isabel Tembo</li><li>Catarina Crismodia Miguel</li><li>Filomeno Miguel</li></ul></div>
+                </div>
+                <div class="brand-bg-green-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Afternoon Sessions (4:00 PM)</h4>
+                    <div class="teacher-section">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: English Alphabet Activity Continues...</h5><h6 class="text-sm font-medium text-gray-700">Day 4 - N to S: More fun with letters</h6>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activity 1: Learn letters N, O, P, Q, R, S</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Say "N" as in nest, then say only "nest"</li><li>Say "O" as in orange", then say only "orange"</li><li>Say "P" as in parrot, then say only "parrot"</li><li>Say "Q" as in queen, then say only "queen"</li><li>Say "R" as in rabbit, then say only "rabbit"</li><li>Say "S" as in sun, then say only "sun"</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method and illustrative method</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Present (1):</h6><p class="text-sm text-gray-600">Júlia</p></div>
+                    </div>
+                    <div class="teacher-section mt-4">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: Verónica Tibúrcio</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Talking about Schedules and Time</h5><h6 class="text-sm font-medium text-gray-700">Subtitle: Daily Routine</h6>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activities:</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Practical and creative 30-minute lesson</li><li>Student interviews on daily routines</li><li>Each student had to stand in front of the class, introduce themselves, and talk about their daily routine</li><li>Creative drawing session depicting daily routine events with corresponding times</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative and participatory method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (6):</h6><ul class="list-disc ml-6 text-gray-600"><li>Maria Nombo</li><li>Ângela Nombo</li><li>Valentina</li><li>Cleópatra</li><li>Danilo</li><li>Tainara Custódio</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (3):</h6><ul class="list-disc ml-6 text-gray-600"><li>Daniela</li><li>Maria Rosh</li><li>Itiel</li></ul></div></div>
+                        <div class="p-3 bg-yellow-100 rounded mt-3 border border-yellow-300"><p class="font-medium text-yellow-800">Note: Due to climate change, some students didn't attend.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="day-section">
+                <h3 class="text-xl font-medium mb-4 text-gray-800">Friday, May 9, 2025</h3>
+                <div class="mb-6 brand-bg-blue-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Morning Session (8:00 AM)</h4>
+                    <div class="teacher-section border-l-blue-600">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: End Of Week 4: Key Skills Gained</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Skills Gained:</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Talking about daily routines and Schedules</li><li>Using verbs "To Have" and "To Do" on Sentences</li><li>Describing actions, Objects, and Times</li><li>Writing and sharing paragraphs about routines</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Assessment Framework:</h6><p class="text-sm text-gray-600">Day assessment covering key speaking-focused skills from all 4 weeks of Unit 2, focusing on:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Speaking Skill</li><li>Writing Skill</li><li>Reading Skill</li><li>Listening Skill</li></ul><p class="text-sm font-medium mt-2 text-gray-700">Assessment points:</p><ol class="list-decimal ml-6 text-sm text-gray-600"><li>Alphabet & Spelling</li><li>Numbers & Quantities</li><li>Cultural Connection</li></ol></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Catarina Crismodia Miguel</li><li>Filomeno Miguel</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (2):</h6><ul class="list-disc ml-6 text-gray-600"><li>Emanuel Amorim</li><li>André Isabel Tembo</li></ul></div></div>
+                    </div>
+                </div>
+                <div class="brand-bg-green-light p-4 rounded-lg">
+                    <h4 class="text-lg font-medium mb-2 text-gray-900">Afternoon Sessions (4:00 PM)</h4>
+                    <div class="teacher-section">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: José</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: English Alphabet Activity Continues...</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Activity 3: Cultural Connection</h6><ul class="list-disc ml-6 text-sm text-gray-600"><li>Saying the names of Angolan food in attachment with the initials letters of alphabet: F, M, O</li><li>Challenge: Creating short story using these initials</li></ul></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative method and illustrative method</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Materials Used:</h6><p class="text-sm text-gray-600">Projector, markers, sheet of paper shaped in format of cards, etc.</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Present (1):</h6><p class="text-sm text-gray-600">Júlia</p></div>
+                    </div>
+                    <div class="teacher-section mt-4">
+                        <p class="text-sm font-semibold text-gray-700">Teacher: Verónica Tibúrcio</p>
+                        <h5 class="font-medium mb-1 text-gray-800">Theme: Practice Sessions (Friday custom)</h5>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Session Structure:</h6><ol class="list-decimal ml-6 text-sm text-gray-600"><li>Introduction</li><li>Interview (topic: daily routine)</li><li>Interpretation</li><li>Role Play</li></ol></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Interpretation Activity:</h6><p class="text-sm text-gray-600">Three participants came to the front:</p><ul class="list-disc ml-6 text-sm text-gray-600"><li>Person on right spoke in English</li><li>Person on left spoke in Portuguese</li><li>Person in middle translated between the two</li></ul><p class="text-sm italic mt-2 bg-gray-50 p-3 rounded border border-gray-200 text-gray-700">"We had this recreational moment in order to stimulate learning, encourage them to express everything they have received through each lesson, and also to awaken their skills."</p></div>
+                        <div class="mb-3"><h6 class="font-medium text-gray-700">Teaching Method:</h6><p class="text-sm text-gray-600">Informative and participatory method</p></div>
+                        <div class="flex justify-between text-sm"><div><h6 class="font-medium text-gray-700">Present (5):</h6><ul class="list-disc ml-6 text-gray-600"><li>Maria Nombo</li><li>Ângela Nombo</li><li>Valentina</li><li>Cleópatra</li><li>Tainara Custódio</li></ul></div><div><h6 class="font-medium text-gray-700">Absent (4):</h6><ul class="list-disc ml-6 text-gray-600"><li>Danilo</li><li>Daniela</li><li>Maria Rosh</li><li>Itiel</li></ul></div></div>
+                        <div class="p-3 bg-yellow-100 rounded mt-3 border border-yellow-300"><p class="font-medium text-yellow-800">Note: "This week, some students were absent for unknown reasons. I believe next week will be different."</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold mb-4 brand-text-blue">Weekly Insights & Recommendations</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-800">Key Observations</h3>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Morning sessions consistently had lower attendance compared to afternoon sessions.</li>
+                        <li>Climate change was cited multiple times as a reason for student absence.</li>
+                        <li>Practical and participatory methods engaged students effectively.</li>
+                        <li>Progress in alphabet learning and time expressions was consistent throughout the week.</li>
+                        <li>Maintenance issue identified with one table in the classroom.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-800">Recommendations</h3>
+                    <ul class="list-disc ml-6 space-y-2 text-gray-700">
+                        <li>Investigate causes of consistent absences, particularly in the morning class.</li>
+                        <li>Consider rescheduling morning sessions if climate issues persist.</li>
+                        <li>Repair the damaged table reported by Teacher Verónica.</li>
+                        <li>Continue with multi-sensory teaching approaches that have proven effective.</li>
+                        <li>Consider merging small classes if attendance continues to be low.</li>
+                        <li>Follow up with consistently absent students to improve attendance.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-10 pt-6 border-t border-gray-300">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-sm text-gray-600">Report compiled by Almeida José</p>
+                    <p class="text-sm text-gray-600">May 10, 2025</p>
+                </div>
+                <div>
+                    <img src="https://grupoysam.com/wp-content/uploads/2025/05/ATC2.webp" alt="ATC Logo" class="h-12" onerror="this.onerror=null;this.src='https://placehold.co/100x48/cccccc/ffffff?text=ATC+Logo';">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Chart configurations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Register the datalabels plugin globally
+            Chart.register(ChartDataLabels);
+
+            // Define Brand Colors for Charts
+            const brandBlue = '#2563eb'; 
+            const brandGreen = '#10b981'; 
+            const brandOrange = '#f97316'; 
+            const brandPurple = '#9333ea'; 
+            const brandPink = '#ec4899'; 
+            // For light theme, chart text and grid colors can often use Chart.js defaults or slightly darker grays
+            const chartTextColor = '#374151'; // Darker gray for text on light background
+            const chartGridColor = '#e5e7eb'; // Light gray for grid lines
+
+            // --- Attendance Chart (Modified to show percentages) ---
+            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+            const morningMaxEnrolled = 4;
+            const afternoonMaxEnrolled = 13;
+            const morningAttendanceRaw = [2, 0, 2, 0, 2];
+            const afternoonAttendanceRaw = [8, 8, 8, 7, 6];
+            const morningAttendancePercentages = morningAttendanceRaw.map(val => ((val / morningMaxEnrolled) * 100));
+            const afternoonAttendancePercentages = afternoonAttendanceRaw.map(val => ((val / afternoonMaxEnrolled) * 100));
+
+            new Chart(attendanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                    datasets: [{
+                        label: 'Morning Class',
+                        data: morningAttendancePercentages,
+                        backgroundColor: brandBlue + 'B3', // Blue with 70% opacity
+                        borderColor: brandBlue,
+                        borderWidth: 1
+                    }, {
+                        label: 'Afternoon Class (Combined)',
+                        data: afternoonAttendancePercentages,
+                        backgroundColor: brandGreen + 'B3', // Green with 70% opacity
+                        borderColor: brandGreen,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: {color: chartTextColor} },
+                        title: { display: true, text: 'Daily Student Attendance Rate (%)', font: { size: 16 }, color: chartTextColor },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) { label += context.parsed.y.toFixed(1) + '%'; } 
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: (value) => parseFloat(value).toFixed(0) + '%',
+                            color: '#ffffff',
+                            anchor: 'center',
+                            align: 'center',
+                            font: { weight: 'bold', size: 10 },
+                            display: (context) => context.dataset.data[context.dataIndex] > 0
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true, max: 100,
+                            title: { display: true, text: 'Attendance Rate (%)', color: chartTextColor },
+                            ticks: { callback: (value) => value + "%", color: chartTextColor },
+                            grid: { color: chartGridColor }
+                        },
+                        x: {
+                             ticks: {color: chartTextColor },
+                             grid: { color: chartGridColor }
+                        }
+                    }
+                }
+            });
+
+            // --- Topics Chart (Pie with Percentages) ---
+            const topicsCtx = document.getElementById('topicsChart').getContext('2d');
+            new Chart(topicsCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Time & Schedules', 'Daily Routines', 'English Alphabet', 'Practical Activities'],
+                    datasets: [{
+                        data: [35, 25, 30, 10],
+                        backgroundColor: [
+                            brandBlue + 'B3', brandGreen + 'B3', brandOrange + 'B3', brandPurple + 'B3'
+                        ],
+                        borderColor: [ brandBlue, brandGreen, brandOrange, brandPurple ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: {color: chartTextColor} },
+                        title: { display: true, text: 'Topic Distribution (%)', font: { size: 16 }, color: chartTextColor },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) { label += context.parsed + '%'; }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: (value) => value + '%',
+                            color: '#fff', 
+                            font: { weight: 'bold', size: 12 }
+                        }
+                    }
+                }
+            });
+
+            // --- Methods Chart (Bar with Percentages) ---
+            const methodsCtx = document.getElementById('methodsChart').getContext('2d');
+            const methodsDataRaw = [10, 8, 5, 5, 4];
+            const totalMethodsUsed = methodsDataRaw.reduce((sum, val) => sum + val, 0);
+            const methodsPercentages = methodsDataRaw.map(val => ((val / totalMethodsUsed) * 100));
+
+            new Chart(methodsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Informative', 'Illustrative', 'Joint Explanatory', 'Collaborative', 'Participatory'],
+                    datasets: [{
+                        label: 'Frequency of Use (%)',
+                        data: methodsPercentages,
+                        backgroundColor: [
+                             brandBlue + 'B3', brandGreen + 'B3', brandOrange + 'B3', brandPurple + 'B3', brandPink + 'B3'
+                        ],
+                        borderColor: [ brandBlue, brandGreen, brandOrange, brandPurple, brandPink ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Teaching Methodologies Usage (%)', font: { size: 16 }, color: chartTextColor },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.label + ': ';
+                                    const originalValue = methodsDataRaw[context.dataIndex];
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x.toFixed(1) + '% (' + originalValue + ' uses)';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: (value) => value.toFixed(1) + '%',
+                            color: (context) => { 
+                                const bgColor = context.dataset.backgroundColor[context.dataIndex];
+                                const rgb = bgColor.match(/\d+/g);
+                                if (!rgb) return '#333333'; // Default to dark if color parsing fails
+                                const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+                                return brightness > 125 ? '#333333' : '#ffffff';
+                            },
+                            anchor: 'end', align: 'right', padding: { right: 6 },
+                            font: { weight: 'bold', size: 10 }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            beginAtZero: true,
+                            max: Math.max(...methodsPercentages) > 50 ? 100 : Math.ceil(Math.max(...methodsPercentages)/10)*10 + 10,
+                            title: { display: true, text: 'Percentage of Use (%)', color: chartTextColor },
+                             ticks: { callback: (value) => value + "%", color: chartTextColor },
+                             grid: {color: chartGridColor}
+                        },
+                        y: {
+                            ticks: {color: chartTextColor},
+                            grid: {color: chartGridColor}
+                        }
+                    }
+                }
+            });
+
+            // --- Session Comparison Chart (Line with Percentages) ---
+            const sessionComparisonCtx = document.getElementById('sessionComparisonChart').getContext('2d');
+            new Chart(sessionComparisonCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                    datasets: [{
+                        label: 'Morning Attendance Rate (%)',
+                        data: morningAttendancePercentages,
+                        backgroundColor: brandBlue + '1A', 
+                        borderColor: brandBlue,
+                        borderWidth: 2, fill: true, tension: 0.3
+                    }, {
+                        label: 'Afternoon Attendance Rate (%)',
+                        data: afternoonAttendancePercentages,
+                        backgroundColor: brandGreen + '1A', 
+                        borderColor: brandGreen,
+                        borderWidth: 2, fill: true, tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: {color: chartTextColor} },
+                        title: { display: true, text: 'Session Comparison by Attendance Rate (%)', font: { size: 16 }, color: chartTextColor },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) { label += context.parsed.y.toFixed(1) + '%'; }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            formatter: (value) => parseFloat(value).toFixed(0) + '%',
+                            backgroundColor: function(context) {
+                                return context.dataset.borderColor;
+                            },
+                            borderRadius: 4, color: 'white',
+                            font: { weight: 'bold', size: 10 },
+                            padding: { top: 4, bottom: 2, left: 4, right: 4 },
+                            align: 'end', 
+                            anchor: 'end',
+                            offset: -20, 
+                             display: function(context) {
+                                return context.dataset.data[context.dataIndex] > 0; 
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true, max: 100,
+                            title: { display: true, text: 'Attendance Rate (%)', color: chartTextColor },
+                            ticks: { callback: (value) => value + "%", color: chartTextColor },
+                             grid: {color: chartGridColor}
+                        },
+                        x: {
+                             ticks: {color: chartTextColor},
+                             grid: {color: chartGridColor}
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
